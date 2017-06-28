@@ -1,9 +1,10 @@
 """
-An attempt to create a cool hangman solver thing!!
+A simple Python based hangman solver.
 
-One flaw is that this is a letter based frequency analyser, not a word based one. 
-So we can do rudimentary analysis to rule out some simple words, but we can't rank
-words by how likely they are to appear in a hangman game at all.
+One flaw with this program is that it uses letter based frequency analysis, as opposed to
+a word based analysis. Hence, it implicitly weights all words as equally likely to appear
+in a hangman game -- additional data weighting the actual frequency of words that appear
+in the context of a hangman game could be used to improve this model.
 """
 
 from vocabulary import hangman_candidates
