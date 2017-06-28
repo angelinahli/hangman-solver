@@ -9,6 +9,7 @@ import time
 import numpy as np
 
 from vocabulary import hangman_candidates
+from hangman_solver import get_possible_words, same_right, same_wrong
 
 # Automatic guesser
 
@@ -18,42 +19,6 @@ for word in hangman_candidates:
 	if len(word) not in wd_lengths:
 		wds_lengths[len(word)] = []
 	wd_lengths[len(word)].append(word)
-
-def get_possible_words(word_guess, wrong_chars):
-	"""Given a word in the format 'p??ho?' and an iterable of wrong characters, 
-	returns a list of possible word matches."""
-	
-	candidates = []
-	
-	for word in wd_lengths[len(word_guess)]:
-
-		# (1) find words with same right characters.
-		elif not same_right(word_guess, word):
-			continue
-
-		# (2) find words with same wrong characters.
-		elif not same_wrong(wrong_chars, word):
-			continue
-
-		candidates.append(word)
-candidates
-	return 
-
-def same_right(guess, word):
-	"""Given a word guess in format 'p??ho?' and a candidate word of the same length, 
-	determines whether the word could match up with the guess."""
-	for i in range(len(guess)):
-		if guess[i] != '?' and guess[i] != word[i]:
-			return False # If at any point a known char of the guess deviates from the candidate word, return false
-	return True
-
-def same_wrong(wrong_chars, word):
-	"""Given a list of wrong characters, determines whether or not a candidate word 
-	contains any characters known to be wrong."""
-	for char in word:
-		if char in wrong_chars:
-			return False
-	return True
 
 def get_top_guess(word_guess, possible_words):
 	"""Given a word guess, and a list of potential words that match up with this word guess,
