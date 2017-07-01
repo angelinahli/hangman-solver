@@ -7,32 +7,30 @@ in a hangman game -- additional data weighting the actual frequency of words tha
 in the context of a hangman game could be used to improve this model.
 """
 
-from vocabulary import hangman_candidates
+# vocabulary stored in dictionary sorted by length
+from vocabulary import sorted_words
 
 ##### PT 1: Find the words that might match. #####
-
-# Sort words into dictionary to make searching easier
-sorted_words = {}
-
-for word in hangman_candidates:
-	sorted_words[len(word)] = sorted_words.get(len(word), []).append(word)
 
 def get_possible_words(input_word, wrong_letters):
 	"""Given an input word in the format 'p??ho?' and wrong characters in dct form {'e': True, 'f': True, 'g': True}, 
 	returns a list of possible word matches."""
 
 	# Uses only words that have the same length as the word guess
-	candidates = sorted_words[len(word_guess)]
+	candidates = sorted_words[len(input_word)]
+	new_candidates = []
 
 	for guess in candidates:
 
 		if not matching_letters(input_word, guess):
-			candidates.remove(guess)
+			continue
 
-		elif not contains_no_wrong_letters(wrong_letters, guess):
-			candidates.remove(guess)
+		if not contains_no_wrong_letters(wrong_letters, guess):
+			continue
 
-	return candidates
+		new_candidates.append(guess)
+
+	return new_candidates
 
 # helper functions
 
@@ -100,4 +98,4 @@ def run():
 
 # ----------- TESTING AREA --------------
 
-run()
+# run()
