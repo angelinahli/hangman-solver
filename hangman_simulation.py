@@ -1,11 +1,11 @@
-"""barebones hangman simulator.
-NOTE: only works for single words that are within my dictionary.
-
-goal: test every word on hangman, automatically play the best 
-letter possible, and see what the hit rate is for each word before 
-you've guessed it."""
+"""
+Simulates a game of hangman, by pitting the hangman solver against a series of words.
+Uses simulation to generate hangman gameplay analysis on which hangman words are the
+most difficult for the solver to guess.
+"""
 
 import time
+import csv
 import numpy as np
 
 from vocabulary import sorted_words
@@ -81,9 +81,39 @@ def hangman_stats(sample):
 	print "Hardest hangman words to guess (in order of difficulty): {hard}".format(hard=", ".join([word_lst[0] for word_lst in hangman_words[:5] ]))
 	print "Average number of wrong characters needed per guess: {av_wrong}".format(av_wrong=round(np.mean([word_lst[2] for word_lst in hangman_words]), 3))
 
+def hangman_stats_doc(sample, filename):
+	header = ['word','tries','wrong_guesses','list_wrong_guesses','contains_unusual_chars']
+
+	with open ('{filename}.csv'.format(filename=filename), 'wb') as stats_file:
+		stats_writer = csv.writer(stats_file, delimiter=',')
+		stats_writer.writerow(header)
+
+		for word in sample:
+			word, tries, wrong_guesses, list_wrong_guesses = automatic_hangman(word)
+			list_wrong_guesses = ','.join(list_wrong_guesses)
+
+			stats_writer.writerow([word, tries, wrong_guesses, list_wrong_guesses, contains_unusual_chars(word)])
+
+def contains_unusual_chars(word):
+	# unusual characters are defined as characters in the last quartile of frequency usage, taken from 
+	# https://en.oxforddictionaries.com/explore/which-letters-are-used-most
+	unusual_chars = {char: True for char in 'wkvxzjq'}
+	word_chars = set(list(word))
+
+	for char in word_chars:
+		if char in unusual_chars:
+			return 1
+	return 0
+
 
 ##### PT 4: Testing #####
 
+sample = ['apple', 'pear', 'gorilla', 'horse', 'zebra', 'chimpanzee', 'hair', 'nonchalant', 'interesting', 'python', 'horrible', 'tin', 'taunt']
+
 start = time.time()
-hangman_stats(['apple', 'pear', 'gorilla', 'chimpanzee', 'hair', 'nonchalant', 'interesting', 'python', 'horrible', 'tin', 'taunt'])
-print "time:" , time.time() - start
+hangman_stats_doc(sample, 'test_sample')
+
+time = time.time() - start
+print "time:", time
+print "avg_time:", time/len(sample)
+
