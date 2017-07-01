@@ -109,9 +109,10 @@ def contains_unusual_chars(word):
 ##### PT 4: Testing #####
 
 sample = ['apple', 'pear', 'gorilla', 'horse', 'zebra', 'chimpanzee', 'hair', 'nonchalant', 'interesting', 'python', 'horrible', 'tin', 'taunt']
-
 start = time.time()
-hangman_stats_doc(sample, 'test_sample')
+
+# actions here
+
 
 time = time.time() - start
 print "time:", time
