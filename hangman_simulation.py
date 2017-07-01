@@ -8,36 +8,30 @@ you've guessed it."""
 import time
 import numpy as np
 
-from vocabulary import hangman_candidates
-from hangman_solver import get_possible_words, same_right, same_wrong
+from vocabulary import sorted_words
+from hangman_solver import get_possible_words, matching_letters, contains_no_wrong_letters
 
-# Automatic guesser
 
-wd_lengths = {}
+##### PT 1: Define a get_top_letter function #####
 
-for word in hangman_candidates:
-	if len(word) not in wd_lengths:
-		wds_lengths[len(word)] = []
-	wd_lengths[len(word)].append(word)
+def get_top_letter(input_word, possible_words):
+	"""Given an input word guess, and a list of potential words that match up with this word guess,
+	   determines optimal next letter to guess."""
 
-def get_top_guess(word_guess, possible_words):
-	"""Given a word guess, and a list of potential words that match up with this word guess,
-	determines which letter to try next."""
+	candidate_chars = {}
+	for guess in possible_words:
+		unguessed_chars = set(filter(lambda char: char not in input_word, guess))
 
-	potential_letters = {}
+		for c in unguessed_chars:
+			candidate_chars[c] = candidate_chars.get(c, 0) + 1
 
-	for word in possible_words:
-		# list of unique letters not already guessed.
-		try_letters = list(set(filter(lambda char: char not in word_guess, word)))
-		for char in try_letters:
-			potential_letters[char] = potential_letters.get(char, 0) + 1
+	chars = sorted(candidate_chars.items(), key=lambda letter_tup: letter_tup[1], reverse=True)
 
-	letters = sorted(potential_letters.items(), key=lambda letter_tup: letter_tup[1], reverse=True)
+	# incurs IndexError if the input word being guessed is not in my dictionary
+	return chars[0][0]
 
-	# the only times this should incur an index error are if I've already guessed the word or if the word isn't in hangman_candidates. Solved for both situations.
-	return letters[0][0]
 
-# Automatic player
+##### PT 2: Bare bones hangman player #####
 
 def automatic_hangman(word):
 	"""Returns tuple in form:(num tries before solving, 
