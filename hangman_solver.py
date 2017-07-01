@@ -12,19 +12,18 @@ from vocabulary import sorted_words
 
 ##### PT 1: Find the words that might match. #####
 
-def get_possible_words(input_word, wrong_chars):
-	"""Given an input word in the format 'p??ho?' and wrong characters in dct form {'e': True, 'f': True, 'g': True}, 
-	returns a list of possible word matches."""
+def get_possible_words(input_word, wrong_chars, candidate_words):
+	"""Given an input word in the format 'p??ho?', wrong characters in 
+	dct form {'e': True, 'f': True, 'g': True} and a starting list of
+	candidate words, returns a list of possible word matches."""
 
-	# Uses only words that have the same length as the word guess
-	candidates = sorted_words[len(input_word)]
 	new_candidates = []
 
-	for guess in candidates:
+	for guess in candidate_words:
 		if not matching_letters(input_word, guess):
-			continue
+			continue  # implicitly discard if wrong
 		if not contains_no_wrong_letters(wrong_chars, guess):
-			continue
+			continue  # implicitly discard if wrong
 		new_candidates.append(guess)
 
 	return new_candidates
@@ -101,9 +100,10 @@ def run(input_word, wrong_chars):
 	if not isinstance(wrong_chars, dict):
 		wrong_chars = {char: True for char in wrong_chars}
 
-	possible_words = get_possible_words(input_word, wrong_chars)
+	candidate_words = sorted_words[len(input_word)]
+	possible_words = get_possible_words(input_word, wrong_chars, candidate_words)
 	top_letters = get_top_letters(input_word, possible_words)
-	
+
 	print_message(input_word, top_letters, possible_words)
 
 def run_interactive():
@@ -115,4 +115,4 @@ def run_interactive():
 
 ##### PT 4: Testing #####
 
-run_interactive()
+#run_interactive()

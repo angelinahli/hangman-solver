@@ -8,70 +8,72 @@ you've guessed it."""
 import time
 import numpy as np
 
-from vocabulary import hangman_candidates
-from hangman_solver import get_possible_words, same_right, same_wrong
+from vocabulary import sorted_words
+from hangman_solver import get_possible_words, matching_letters, contains_no_wrong_letters
 
-# Automatic guesser
 
-wd_lengths = {}
+##### PT 1: Define helper functions #####
 
-for word in hangman_candidates:
-	if len(word) not in wd_lengths:
-		wds_lengths[len(word)] = []
-	wd_lengths[len(word)].append(word)
+def get_top_letter(input_word, possible_words):
+	"""Given an input word guess, and a list of potential words that match up with this word guess,
+	   determines optimal next letter to guess."""
 
-def get_top_guess(word_guess, possible_words):
-	"""Given a word guess, and a list of potential words that match up with this word guess,
-	determines which letter to try next."""
+	candidate_chars = {}
+	for guess in possible_words:
+		unguessed_chars = set(filter(lambda char: char not in input_word, guess))
 
-	potential_letters = {}
+		for c in unguessed_chars:
+			candidate_chars[c] = candidate_chars.get(c, 0) + 1
 
-	for word in possible_words:
-		# list of unique letters not already guessed.
-		try_letters = list(set(filter(lambda char: char not in word_guess, word)))
-		for char in try_letters:
-			potential_letters[char] = potential_letters.get(char, 0) + 1
+	chars = sorted(candidate_chars.items(), key=lambda letter_tup: letter_tup[1], reverse=True)
 
-	letters = sorted(potential_letters.items(), key=lambda letter_tup: letter_tup[1], reverse=True)
+	return chars[0][0]
 
-	# the only times this should incur an index error are if I've already guessed the word or if the word isn't in hangman_candidates. Solved for both situations.
-	return letters[0][0]
 
-# Automatic player
+##### PT 2: Automatically use solver to play a game #####
 
 def automatic_hangman(word):
-	"""Returns tuple in form:(num tries before solving, 
-	number of wrong chars, list of wrong chars)"""
+	"""Returns tuple in form:(word, num tries before solving, 
+	number of chars guessed wrong, list of wrong chars)"""
 
-	# if the word isn't in my dictionary, no reason to even try because you'll infinitely recur.
-	if word not in hangman_candidates:
-		hangman_candidates.append(word)
+	# if the word isn't in my dictionary, add to the dictionary.
+	if word not in sorted_words[len(word)]:
+		sorted_words[len(word)] += [word]
 
-	word_check = ['?' for char in range(len(word))]
-	word_correct = list(word)
+	input_word_lst = ['?' for char in range(len(word))]
+	correct_word_lst = list(word)
 
-	# set starting vals
+	# define initial set of candidate words
+	possible_words = get_possible_words(input_word_lst, '', sorted_words[len(word)])
+
 	tries = 0
-	wrong_chars = []
-	guess = ''
+	wrong_chars = {}
+	start_time = time.time()
 
-	while word_correct != word_check:
+	while input_word_lst != correct_word_lst:
 		tries += 1
 
 		# finds the best next guess
-		word_guess = "".join(word_check)
-		possible_words = get_possible_words(word_guess, wrong_chars)
-		guess = get_top_guess(word_guess, possible_words)
+		input_word = ''.join(input_word_lst)
+		guess = get_top_letter(input_word, possible_words)
 
-		# replaces things that are right/wrong
-		indices = [i for i, val in enumerate(word) if val == guess]
-		if len(indices) == 0:
-			wrong_chars.append(guess)
+		# replaces values that are correct
+		if guess in correct_word_lst:
+			guessed_indices = [i for i, val in enumerate(correct_word_lst) if val==guess]
+			for i in guessed_indices:
+				input_word_lst[i] = guess
+		
+		# otherwise, adds to the list of wrong chars	
 		else:
-			for i in indices:
-				word_check[i] = guess
+			wrong_chars[guess] = True
 
-	return word, tries, len(wrong_chars), wrong_chars
+		# narrow possible words to make more efficient
+		possible_words = get_possible_words(input_word_lst, wrong_chars, possible_words)
+
+	return word, tries, len(wrong_chars), wrong_chars.keys()
+
+
+##### PT 3: Run simulator on select sample to generate statistics #####
 
 def hangman_stats(sample):
 	hangman_words = sorted([automatic_hangman(word) for word in sample], key=lambda word_lst: word_lst[2], reverse=True)
@@ -79,8 +81,9 @@ def hangman_stats(sample):
 	print "Hardest hangman words to guess (in order of difficulty): {hard}".format(hard=", ".join([word_lst[0] for word_lst in hangman_words[:5] ]))
 	print "Average number of wrong characters needed per guess: {av_wrong}".format(av_wrong=round(np.mean([word_lst[2] for word_lst in hangman_words]), 3))
 
-# ---------- Testing area ----------
+
+##### PT 4: Testing #####
 
 start = time.time()
-automatic_hangman('jazz')
-print time.time() - start
+hangman_stats(['apple', 'pear', 'gorilla', 'chimpanzee', 'hair', 'nonchalant', 'interesting', 'python', 'horrible', 'tin', 'taunt'])
+print "time:" , time.time() - start
