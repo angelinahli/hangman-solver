@@ -1,3 +1,6 @@
+# Word list originally downloaded from here: https://svnweb.freebsd.org/csrg/share/dict/
+# Sorted by word length
+
 sorted_words = {
 1: ['b', 'c', 'd', 'e', 'f', 'g', 'h', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'], 
 2: ['ac', 'ad', 'ah', 'ak', 'am', 'ar', 'ax', 'az', 'ba', 'bc', 'bo', 'bp', 'br', 'ca', 'cc', 'cf', 'ci', 'cm', 'co', 'cp', 'ct', 'cz', 'dc', 'de', 'dj', 'dr', 'du', 'eh', 'el', 'em', 'en', 'er', 'et', 'ex', 'fa', 'fe', 'fl', 'fm', 'fo', 'fr', 'ft', 'ga', 'ge', 'gi', 'gm', 'gp', 'gu', 'ha', 'hi', 'ho', 'hp', 'hq', 'hr', 'ht', 'hz', 'ia', 'id', 'ii', 'il', 'io', 'iq', 'ir', 'iv', 'ix', 'jo', 'jp', 'jr', 'ko', 'ks', 'kt', 'ku', 'kw', 'ky', 'la', 'lb', 'll', 'lo', 'lp', 'ma', 'mc', 'md', 'mg', 'mi', 'mm', 'mn', 'mo', 'mp', 'ms', 'mt', 'mu', 'nb', 'nc', 'nd', 'ne', 'nh', 'ni', 'nj', 'nm', 'nu', 'nv', 'nw', 'ny', 'oh', 'ok', 'op', 'ow', 'ox', 'oz', 'pa', 'pe', 'ph', 'pi', 'pl', 'pm', 'pp', 'pr', 'pt', 'px', 'qq', 'qr', 'qt', 'qu', 'rd', 're', 'rh', 'ri', 'rn', 'rx', 'sa', 'sc', 'sd', 'se', 'sf', 'sh', 'si', 'sj', 'sq', 'sr', 'ss', 'st', 'sw', 'ta', 'tb', 'tn', 'tt', 'tv', 'tx', 'uk', 'un', 'ut', 'va', 'vc', 'vd', 'vi', 'vs', 'vt', 'wa', 'wc', 'wi', 'wo', 'wt', 'wu', 'wv', 'wy', 'xi', 'yd', 'ye'], 
