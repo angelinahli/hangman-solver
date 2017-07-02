@@ -108,13 +108,14 @@ def contains_unusual_chars(word):
 
 ##### PT 4: Testing #####
 
-sample = ['apple', 'pear', 'gorilla', 'horse', 'zebra', 'chimpanzee', 'hair', 'nonchalant', 'interesting', 'python', 'horrible', 'tin', 'taunt']
-start = time.time()
+if __name__ == '__main__':
+	sample = ['apple', 'pear', 'gorilla', 'horse', 'zebra', 'chimpanzee', 'hair', 'nonchalant', 'interesting', 'python', 'horrible', 'tin', 'taunt']
+	start = time.time()
 
-# actions here
+	# actions here
 
 
-time = time.time() - start
-print "time:", time
-print "avg_time:", time/len(sample)
+	time = time.time() - start
+	print "time:", time
+	print "avg_time:", time/len(sample)
 

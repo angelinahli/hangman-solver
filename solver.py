@@ -115,4 +115,4 @@ def run_interactive():
 
 ##### PT 4: Testing #####
 
-#run_interactive()
+run_interactive()
