@@ -9,7 +9,7 @@ import csv
 import numpy as np
 
 from vocabulary import sorted_words
-from hangman_solver import get_possible_words, matching_letters, contains_no_wrong_letters
+from solver import get_possible_words
 
 
 ##### PT 1: Define helper functions #####
@@ -113,7 +113,7 @@ if __name__ == '__main__':
 	start = time.time()
 
 	# actions here
-
+	
 
 	time = time.time() - start
 	print "time:", time
