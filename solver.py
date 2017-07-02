@@ -115,4 +115,5 @@ def run_interactive():
 
 ##### PT 4: Testing #####
 
-#run_interactive()
+if __name__ == '__main__':
+	run_interactive()
