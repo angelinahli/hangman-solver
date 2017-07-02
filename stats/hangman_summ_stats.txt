@@ -1,0 +1,105 @@
+{smcl}
+{txt}{sf}{ul off}{.-}
+      name:  {res}<unnamed>
+       {txt}log:  {res}/Users/user/Desktop/hangman/hangman_summ_stats.txt
+  {txt}log type:  {res}smcl
+ {txt}opened on:  {res} 2 Jul 2017, 18:59:17
+
+{com}. 
+. *** (A) Basic summary stats ***
+
+. 
+. import delim using "$import_data", varnames(1) clear
+{res}{text}(31 vars, 61,437 obs)
+
+{com}. gen num_unusual = cont_w + cont_k + cont_v + cont_x + cont_z + cont_j + cont_q
+
+. 
+. foreach varname in wrong len_word cont_unusual num_unusual {c -(}
+{txt}  2{com}.     di "summ of `varname'"
+{txt}  3{com}.     summ `varname'
+{txt}  4{com}. {c )-}
+summ of wrong
+
+{txt}    Variable {c |}        Obs        Mean    Std. Dev.       Min        Max
+{hline 13}{c +}{hline 57}
+{space 7}wrong {c |}{res}     61,437    2.249849    2.100961          0         25
+summ of len_word
+
+{txt}    Variable {c |}        Obs        Mean    Std. Dev.       Min        Max
+{hline 13}{c +}{hline 57}
+{space 4}len_word {c |}{res}     61,437    8.360548     2.47815          1         22
+summ of cont_unusual
+
+{txt}    Variable {c |}        Obs        Mean    Std. Dev.       Min        Max
+{hline 13}{c +}{hline 57}
+cont_unusual {c |}{res}     61,437    .2837053    .4507992          0          1
+summ of num_unusual
+
+{txt}    Variable {c |}        Obs        Mean    Std. Dev.       Min        Max
+{hline 13}{c +}{hline 57}
+{space 1}num_unusual {c |}{res}     61,437    .3080229     .512602          0          3
+
+{com}. 
+. *** (B) Data analysis ***
+
+. 
+. foreach varname in len_word cont_unusual num_unusual {c -(}
+{txt}  2{com}.     di "does `varname' correlate with difficulty of guessing word?"
+{txt}  3{com}.     reg wrong `varname'
+{txt}  4{com}. {c )-}
+does len_word correlate with difficulty of guessing word?
+
+{txt}      Source {c |}       SS           df       MS      Number of obs   ={res}    61,437
+{txt}{hline 13}{c +}{hline 34}   F(1, 61435)     = {res} 41034.47
+{txt}       Model {c |} {res} 108595.865         1  108595.865   {txt}Prob > F        ={res}    0.0000
+{txt}    Residual {c |} {res} 162584.946    61,435  2.64645473   {txt}R-squared       ={res}    0.4005
+{txt}{hline 13}{c +}{hline 34}   Adj R-squared   ={res}    0.4004
+{txt}       Total {c |} {res} 271180.811    61,436  4.41403755   {txt}Root MSE        =   {res} 1.6268
+
+{txt}{hline 13}{c TT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{col 1}       wrong{col 14}{c |}      Coef.{col 26}   Std. Err.{col 38}      t{col 46}   P>|t|{col 54}     [95% Con{col 67}f. Interval]
+{hline 13}{c +}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{space 4}len_word {c |}{col 14}{res}{space 2}-.5364973{col 26}{space 2} .0026485{col 37}{space 1} -202.57{col 46}{space 3}0.000{col 54}{space 4}-.5416883{col 67}{space 3}-.5313063
+{txt}{space 7}_cons {c |}{col 14}{res}{space 2} 6.735261{col 26}{space 2} .0230948{col 37}{space 1}  291.64{col 46}{space 3}0.000{col 54}{space 4} 6.689995{col 67}{space 3} 6.780527
+{txt}{hline 13}{c BT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{res}does cont_unusual correlate with difficulty of guessing word?
+
+{txt}      Source {c |}       SS           df       MS      Number of obs   ={res}    61,437
+{txt}{hline 13}{c +}{hline 34}   F(1, 61435)     = {res}   217.76
+{txt}       Model {c |} {res} 957.837956         1  957.837956   {txt}Prob > F        ={res}    0.0000
+{txt}    Residual {c |} {res} 270222.973    61,435  4.39851832   {txt}R-squared       ={res}    0.0035
+{txt}{hline 13}{c +}{hline 34}   Adj R-squared   ={res}    0.0035
+{txt}       Total {c |} {res} 271180.811    61,436  4.41403755   {txt}Root MSE        =   {res} 2.0973
+
+{txt}{hline 13}{c TT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{col 1}       wrong{col 14}{c |}      Coef.{col 26}   Std. Err.{col 38}      t{col 46}   P>|t|{col 54}     [95% Con{col 67}f. Interval]
+{hline 13}{c +}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+cont_unusual {c |}{col 14}{res}{space 2} .2769819{col 26}{space 2} .0187698{col 37}{space 1}   14.76{col 46}{space 3}0.000{col 54}{space 4} .2401932{col 67}{space 3} .3137707
+{txt}{space 7}_cons {c |}{col 14}{res}{space 2} 2.171268{col 26}{space 2} .0099975{col 37}{space 1}  217.18{col 46}{space 3}0.000{col 54}{space 4} 2.151673{col 67}{space 3} 2.190863
+{txt}{hline 13}{c BT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{res}does num_unusual correlate with difficulty of guessing word?
+
+{txt}      Source {c |}       SS           df       MS      Number of obs   ={res}    61,437
+{txt}{hline 13}{c +}{hline 34}   F(1, 61435)     = {res}   215.84
+{txt}       Model {c |} {res} 949.394014         1  949.394014   {txt}Prob > F        ={res}    0.0000
+{txt}    Residual {c |} {res} 270231.417    61,435  4.39865577   {txt}R-squared       ={res}    0.0035
+{txt}{hline 13}{c +}{hline 34}   Adj R-squared   ={res}    0.0035
+{txt}       Total {c |} {res} 271180.811    61,436  4.41403755   {txt}Root MSE        =   {res} 2.0973
+
+{txt}{hline 13}{c TT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{col 1}       wrong{col 14}{c |}      Coef.{col 26}   Std. Err.{col 38}      t{col 46}   P>|t|{col 54}     [95% Con{col 67}f. Interval]
+{hline 13}{c +}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{space 1}num_unusual {c |}{col 14}{res}{space 2}  .242511{col 26}{space 2}  .016507{col 37}{space 1}   14.69{col 46}{space 3}0.000{col 54}{space 4} .2101572{col 67}{space 3} .2748648
+{txt}{space 7}_cons {c |}{col 14}{res}{space 2} 2.175151{col 26}{space 2} .0098716{col 37}{space 1}  220.34{col 46}{space 3}0.000{col 54}{space 4} 2.155802{col 67}{space 3} 2.194499
+{txt}{hline 13}{c BT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{res}
+{com}. 
+. log close
+      {txt}name:  {res}<unnamed>
+       {txt}log:  {res}/Users/user/Desktop/hangman/hangman_summ_stats.txt
+  {txt}log type:  {res}smcl
+ {txt}closed on:  {res} 2 Jul 2017, 18:59:19
+{txt}{.-}
+{smcl}
+{txt}{sf}{ul off}
