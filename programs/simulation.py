@@ -70,7 +70,7 @@ def automatic_hangman(word):
 		# narrow possible words to make more efficient
 		possible_words = get_possible_words(input_word_lst, wrong_chars, possible_words)
 
-	return word, tries, len(wrong_chars), wrong_chars.keys()
+	return word, tries, len(wrong_chars), len(word)
 
 
 ##### PT 3: Run simulator on select sample to generate statistics #####
@@ -81,32 +81,6 @@ def hangman_stats(sample):
 	print "Hardest hangman words to guess (in order of difficulty): {hard}".format(hard=", ".join([word_lst[0] for word_lst in hangman_words[:5] ]))
 	print "Average number of wrong characters needed per guess: {av_wrong}".format(av_wrong=round(np.mean([word_lst[2] for word_lst in hangman_words]), 3))
 
-def hangman_stats_doc(sample, filename):
-	header = ['word','tries','wrong_guesses','list_wrong_guesses','contains_unusual_chars']
-	all_lines = []
-	for word in sample:
-		word, tries, wrong_guesses, list_wrong_guesses = automatic_hangman(word)
-		list_wrong_guesses = ','.join(list_wrong_guesses)
-		all_lines.append([word, tries, wrong_guesses, list_wrong_guesses, contains_unusual_chars(word)])
-
-	with open ('{filename}.csv'.format(filename=filename), 'wb') as stats_file:
-		stats_writer = csv.writer(stats_file, delimiter=',')
-
-		stats_writer.writerow(header)
-		for line in all_lines:
-			stats_writer.writerow(line)
-
-def contains_unusual_chars(word):
-	# unusual characters are defined as characters in the last quartile of frequency usage, taken from 
-	# https://en.oxforddictionaries.com/explore/which-letters-are-used-most
-	unusual_chars = {char: True for char in 'wkvxzjq'}
-	word_chars = set(list(word))
-
-	for char in word_chars:
-		if char in unusual_chars:
-			return 1
-	return 0
-
 
 ##### PT 4: Testing #####
 
@@ -115,7 +89,7 @@ if __name__ == '__main__':
 	start = time.time()
 
 	# actions here
-	
+
 
 	time = time.time() - start
 	print "time:", time
