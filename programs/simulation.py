@@ -115,7 +115,7 @@ if __name__ == '__main__':
 	start = time.time()
 
 	# actions here
-	hangman_stats_doc(sample, 'sample_test')
+	
 
 	time = time.time() - start
 	print "time:", time
