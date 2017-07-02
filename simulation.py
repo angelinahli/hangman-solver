@@ -83,16 +83,18 @@ def hangman_stats(sample):
 
 def hangman_stats_doc(sample, filename):
 	header = ['word','tries','wrong_guesses','list_wrong_guesses','contains_unusual_chars']
+	all_lines = []
+	for word in sample:
+		word, tries, wrong_guesses, list_wrong_guesses = automatic_hangman(word)
+		list_wrong_guesses = ','.join(list_wrong_guesses)
+		all_lines.append([word, tries, wrong_guesses, list_wrong_guesses, contains_unusual_chars(word)])
 
 	with open ('{filename}.csv'.format(filename=filename), 'wb') as stats_file:
 		stats_writer = csv.writer(stats_file, delimiter=',')
+
 		stats_writer.writerow(header)
-
-		for word in sample:
-			word, tries, wrong_guesses, list_wrong_guesses = automatic_hangman(word)
-			list_wrong_guesses = ','.join(list_wrong_guesses)
-
-			stats_writer.writerow([word, tries, wrong_guesses, list_wrong_guesses, contains_unusual_chars(word)])
+		for line in all_lines:
+			stats_writer.writerow(line)
 
 def contains_unusual_chars(word):
 	# unusual characters are defined as characters in the last quartile of frequency usage, taken from 
@@ -113,7 +115,7 @@ if __name__ == '__main__':
 	start = time.time()
 
 	# actions here
-	
+	hangman_stats_doc(sample, 'sample_test')
 
 	time = time.time() - start
 	print "time:", time
