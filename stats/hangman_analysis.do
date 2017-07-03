@@ -30,11 +30,4 @@ foreach varname in len_word cont_unusual num_unusual {
     reg wrong `varname'
 }
 
-*** (C) Make some summary charts ***
-
-preserve
-    collapse (mean) wrong, by(len_word)
-    histogram wrong
-restore
-
 log close
