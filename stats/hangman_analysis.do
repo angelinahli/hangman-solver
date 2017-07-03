@@ -6,7 +6,7 @@ Data created using hangman simulation program:
 ************************************************************************/
 
 * replace hangman_data_dir before running
-global hangman_data_dir = ""
+global hangman_data_dir = "~/Desktop/hangman"
 global import_data = "$hangman_data_dir/hangman_data.csv"
 
 clear all
@@ -29,5 +29,12 @@ foreach varname in len_word cont_unusual num_unusual {
     di "does `varname' correlate with difficulty of guessing word?"
     reg wrong `varname'
 }
+
+*** (C) Make some summary charts ***
+
+preserve
+    collapse (mean) wrong, by(len_word)
+    histogram wrong
+restore
 
 log close
