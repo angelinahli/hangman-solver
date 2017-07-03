@@ -11,7 +11,9 @@ global import_data = "$hangman_data_dir/hangman_data.csv"
 
 clear all
 set more off
-log using $hangman_data_dir/hangman_summ_stats.txt, replace
+
+cap log close
+log using $hangman_data_dir/hangman_summ_stats, replace
 
 *** (A) Basic summary stats ***
 

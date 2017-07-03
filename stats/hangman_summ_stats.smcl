@@ -1,9 +1,9 @@
 {smcl}
 {txt}{sf}{ul off}{.-}
       name:  {res}<unnamed>
-       {txt}log:  {res}/Users/user/Desktop/hangman/hangman_summ_stats.txt
+       {txt}log:  {res}/Users/user/Desktop/hangman/hangman_summ_stats.smcl
   {txt}log type:  {res}smcl
- {txt}opened on:  {res} 2 Jul 2017, 18:59:17
+ {txt}opened on:  {res} 2 Jul 2017, 23:06:07
 
 {com}. 
 . *** (A) Basic summary stats ***
@@ -97,9 +97,9 @@ cont_unusual {c |}{col 14}{res}{space 2} .2769819{col 26}{space 2} .0187698{col 
 {com}. 
 . log close
       {txt}name:  {res}<unnamed>
-       {txt}log:  {res}/Users/user/Desktop/hangman/hangman_summ_stats.txt
+       {txt}log:  {res}/Users/user/Desktop/hangman/hangman_summ_stats.smcl
   {txt}log type:  {res}smcl
- {txt}closed on:  {res} 2 Jul 2017, 18:59:19
+ {txt}closed on:  {res} 2 Jul 2017, 23:06:13
 {txt}{.-}
 {smcl}
 {txt}{sf}{ul off}
